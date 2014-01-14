@@ -4,7 +4,7 @@ Plugin Name: WP Jquery Scrollup Plugin
 Plugin URI: -
 Description: Jquery scrollup plugin  http://markgoodyear.com/2013/01/scrollup-jquery-plugin/
 Author: shnr.dev@gmail.com
-Version: 0.1.0
+Version: 1.0
 Author URI: http://blog.shnr.net
 License: GPLv2
 
@@ -52,9 +52,7 @@ class Wp_shnr_JQSCRLUP {
         //if ( !get_option(WP_SHNR_JQSCRLUP_TABLE_COLMUN) ) $this->smum_install();
 
         add_action('admin_menu', array(&$this, 'admin_menu'));
-
         add_action( 'wp_enqueue_scripts', array(&$this, 'init_scrollUp_scripts') );
-        add_action( 'wp_head'           , array(&$this, 'init_scrollUp') ); 
 
     }
 
@@ -127,118 +125,26 @@ class Wp_shnr_JQSCRLUP {
             wp_enqueue_style( 'scrollup-setting', plugins_url("/lib/css/themes/image.css", __FILE__) );
         }elseif(isset($options['scrollTitle']) && $options['scrollTitle']){
             wp_enqueue_style( 'scrollup-setting', plugins_url("/lib/css/themes/link.css", __FILE__) );
+        }else{
+            wp_enqueue_style( 'scrollup-setting', plugins_url("/lib/css/themes/image.css", __FILE__) );
         }
         wp_enqueue_script( 'jquery' );
         wp_register_script( 'jquery.easing.min', plugins_url("/lib/js/jquery.easing.min.js", __FILE__) , "",true);
         wp_enqueue_script( 'jquery.easing.min' );
         wp_register_script( 'jquery.scrollUp.min', plugins_url("/lib/js/jquery.scrollUp.min.js", __FILE__) , "",true);
         wp_enqueue_script( 'jquery.scrollUp.min' );
-    }
 
-
-    /*
-     * initialize scroll up plugin
-     */
-    public function init_scrollUp(){
+        // Initialize scrollUp.
         $options = get_option(WP_SHNR_JQSCRLUP_OPTIONS);
         $themes = (isset($options['scrollTheme']))? $options['scrollTheme'] : '';
+        $initoptions_array = array( 'theme' => $themes, 'options' => $options );
 
-        if($themes == "custom"){
-    ?>
-    <script>
-    (function($){
-        $(document).ready(function(){
-
-            $.scrollUp({
-                scrollName: "<?php echo (isset($options['scrollName']) && $options['scrollName'] != "")? $options['scrollName'] : 'scrollUp' ?>", // Element ID
-                scrollDistance: <?php echo (isset($options['scrollDistance']) && $options['scrollDistance'] != "")? $options['scrollDistance'] : '300' ?>, // Distance from top/bottom before showing element (px)
-                scrollFrom: "<?php echo (isset($options['scrollFrom']) && $options['scrollFrom'] != "")? $options['scrollFrom'] : 'top' ?>", // 'top' or 'bottom'
-                scrollSpeed: <?php echo (isset($options['scrollSpeed']) && $options['scrollSpeed'] != "")? $options['scrollSpeed'] : '800' ?>, // Speed back to top (ms)
-                easingType: "<?php echo (isset($options['easingType']) && $options['easingType'] != "")? $options['easingType'] : 'easeOutQuint' ?>", // Scroll to top easing (see http://easings.net/)
-                animation: "<?php echo (isset($options['animation']) && $options['animation'] != "")? $options['animation'] : 'slide' ?>", // Fade, slide, none
-                animationInSpeed: <?php echo (isset($options['animationInSpeed']) && $options['animationInSpeed'] != "")? $options['animationInSpeed'] : '200' ?>, // Animation in speed (ms)
-                animationOutSpeed: <?php echo (isset($options['animationOutSpeed']) && $options['animationOutSpeed'] != "")? $options['animationOutSpeed'] : '200' ?>, // Animation out speed (ms)
-                scrollText: "<?php echo (isset($options['scrollText']) && $options['scrollText'] != "")? $options['scrollText'] : 'Scroll to top' ?>", // Text for element, can contain HTML
-                scrollTitle: <?php echo (isset($options['scrollTitle']) && $options['scrollTitle'] != "")? $options['scrollTitle'] : 'false' ?>, // Set a custom <a> title if required. Defaults to scrollText
-                scrollImg: <?php echo (isset($options['scrollImg']) && $options['scrollImg'] != "")? $options['scrollImg'] : 'true' ?>, // Set true to use image
-                activeOverlay: true, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
-                zIndex: 2147483647 // Z-Index for the overlay
-            });
-        });
-    })(jQuery);
-    </script>
-    <?php
-        }else{
-            switch ($themes) {
-                case 'tab':
-    ?>
-    <script>
-    (function($){
-        $(document).ready(function(){
-            $.scrollUp({
-                    animation: 'slide',
-                    activeOverlay: '#00FFFF'
-            });
-            $('#scrollup-setting-css').attr('href', $('#scrollup-setting-css').attr('href').replace(/themes+\/+\w.+/,"themes/tab.css"));
-        });
-    })(jQuery);
-    </script>
-    <?php
-                    break;
-                case 'pill':
-    ?>
-    <script>
-    (function($){
-        $(document).ready(function(){
-            $.scrollUp({
-                    animation: 'fade',
-                    activeOverlay: '#00FFFF'
-            });
-        $('#scrollup-setting-css').attr('href', $('#scrollup-setting-css').attr('href').replace(/themes+\/+\w.+/,"themes/pill.css"));
-        });
-    })(jQuery);
-    </script>
-    <?php
-                    break;
-                case 'text':
-    ?>
-    <script>
-    (function($){
-        $(document).ready(function(){
-            $.scrollUp({
-                    animation: 'fade',
-                    activeOverlay: '#00FFFF'
-            });
-        $('#scrollup-setting-css').attr('href', $('#scrollup-setting-css').attr('href').replace(/themes+\/+\w.+/,"themes/link.css"));
-        });
-    })(jQuery);
-    </script>
-    <?php
-                    break;
-                case 'image':
-    ?>
-    <script>
-    (function($){
-        $(document).ready(function(){
-            $.scrollUp({
-                    animation: 'fade',
-                    activeOverlay: '#00FFFF',
-                    scrollImg: { active: true }
-            });
-        $('#scrollup-setting-css').attr('href', $('#scrollup-setting-css').attr('href').replace(/themes+\/+\w.+/,"themes/image.css"));
-        });
-    })(jQuery);
-    </script>
-    <?php
-                    break;
-
-                default:
-                    # code...
-                    break;
-            }
-        }
+        wp_register_script( 'init', plugins_url("/lib/js/init.js", __FILE__) , "",true);
+        wp_enqueue_script( 'init' );
+        wp_localize_script( 'init', 'initoptions', $initoptions_array );
 
     }
+
 
 }
 

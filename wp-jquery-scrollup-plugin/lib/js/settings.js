@@ -1,10 +1,8 @@
 (function($){
 
 $(document).ready(function(){
-
 	shnr_jq_settings_init();
 	shnr_jq_theme_change();
-
 });
 
 

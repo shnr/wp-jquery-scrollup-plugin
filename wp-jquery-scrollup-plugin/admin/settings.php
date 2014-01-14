@@ -52,6 +52,18 @@ if( isset($_POST[ $hidden_field_name ]) && $_POST[ $hidden_field_name ] == 'Y' )
     
     // update and redirect.
     $data = h($_POST);
+    $arr_unset = array(
+      '_wpnonce',
+      '_wp_http_referer',
+      'hf',
+      'Submit'
+      );
+    foreach ($arr_unset as $key => $value) {
+        if(isset($data[$value])){
+            unset($data[$value]);
+        }
+    }
+
     update_option( WP_SHNR_JQSCRLUP_OPTIONS, $data )
         
 ?>
