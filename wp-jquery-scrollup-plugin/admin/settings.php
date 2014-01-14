@@ -62,7 +62,7 @@ $options = get_option(WP_SHNR_JQSCRLUP_OPTIONS);
 
 ?>
 <div class="wrap" >
-<h2><?php _e('Jquery Scroll settings', WP_SHNR_JQSCRLUP_DOMAIN); ?></h2>
+<h2><?php _e('jQuery ScrollUp settings', WP_SHNR_JQSCRLUP_DOMAIN); ?></h2>
 <div id='poststuff'>
 
 <div id='galleryList' class="postbox">

@@ -67,8 +67,8 @@ class Wp_shnr_JQSCRLUP {
     {
         $hook = add_submenu_page(
             'options-general.php',
-            __('WP JQ-SCRLUP Setting', WP_SHNR_JQSCRLUP_DOMAIN),
-            __('WP JQ-SCRLUP Setting', WP_SHNR_JQSCRLUP_DOMAIN),
+            __('jQuery ScrollUp', WP_SHNR_JQSCRLUP_DOMAIN),
+            __('jQuery ScrollUp', WP_SHNR_JQSCRLUP_DOMAIN),
             'update_core',
             WP_SHNR_JQSCRLUP_DOMAIN,
             array(&$this, 'admin_page')
