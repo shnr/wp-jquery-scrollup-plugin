@@ -33,7 +33,7 @@ define('WP_SHNR_JQSCRLUP_DOMAIN', "wp-jquery-scrollup-plugin");
 define('WP_SHNR_JQSCRLUPM_PLG_DIR', dirname( plugin_basename( __FILE__ ) ));
 define('WP_SHNR_JQSCRLUP_PLG_FULLPATH', plugin_dir_path(__FILE__) );
 
-load_plugin_textdomain(WP_SHNR_JQSCRLUP_DOMAIN, false, WP_SHNR_JQSCRLUP_PLG_DIR .'/lang');
+load_plugin_textdomain(WP_SHNR_JQSCRLUP_DOMAIN, false, WP_SHNR_JQSCRLUPM_PLG_DIR .'/lang');
 
 define('WP_SHNR_JQSCRLUP_OPTIONS', "shnr_jqscrlup_settings");
 
